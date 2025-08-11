@@ -25,7 +25,7 @@ class User {
 
 List<User> userList = [
   User(
-    nama: 'felix',
+    nama: 'Felix',
     tempatLahir: 'Medan',
     tanggalLahir: '21 Agustus 2003',
     status: 'Mahasiswa',
