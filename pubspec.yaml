@@ -14,6 +14,7 @@ dependencies:
   rive: ^0.13.20
   animated_text_kit: ^4.2.3
   google_fonts: ^6.3.0
+  go_router: ^18.0.0
 
 dev_dependencies:
   flutter_test:

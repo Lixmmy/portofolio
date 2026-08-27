@@ -19,7 +19,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           Container(
             color: Colors.black,
-            height: MediaQuery.of(context).size.height * 0.5,
+            height: MediaQuery.of(context).size.height * 0.7,
             child: Stack(
               children: [
                 SizedBox(
@@ -31,7 +31,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 Positioned(
-                  right: MediaQuery.of(context).size.width > 600 ? 250 : 20,
+                  right: MediaQuery.of(context).size.width > 600 ? 140 : 60,
                   top: 150,
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width > 600 ? 400 : 285,
@@ -82,19 +82,23 @@ class _MyHomePageState extends State<MyHomePage> {
                               print("Tap Event");
                             },
                             repeatForever: false,
+                            isRepeatingAnimation: false,
                           ),
                         ),
                         SizedBox(height: 20),
                         SizedBox(
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               ElevatedButton(
                                 onPressed: () {},
                                 child: Text("View Projects"),
+                                onHover: (value) {},
                               ),
                               OutlinedButton(
                                 onPressed: () {},
                                 child: Text("Download CV"),
+                                onHover: (value) {},
                               ),
                             ],
                           ),
@@ -107,27 +111,16 @@ class _MyHomePageState extends State<MyHomePage> {
                             children: [
                               IconButton(
                                 onPressed: () {},
-                                icon: Image.asset(
-                                  'assets/images/github.png',
-                                  width: 26,
-                                  height: 26,
-                                  color: Colors.white,
-                                ),
+                                icon: Image.asset('assets/images/github.png'),
                               ),
                               IconButton(
                                 onPressed: () {},
-                                icon: Image.asset(
-                                  'assets/images/linkedin.png',
-                                  width: 26,
-                                  height: 26,
-                                ),
+                                icon: Image.asset('assets/images/linkedin.png'),
                               ),
                               IconButton(
                                 onPressed: () {},
                                 icon: Image.asset(
                                   'assets/images/instagram.png',
-                                  width: 26,
-                                  height: 26,
                                 ),
                               ),
                             ],
