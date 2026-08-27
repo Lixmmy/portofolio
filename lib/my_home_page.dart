@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:portofolio/model.dart';
 import 'package:rive/rive.dart' hide Image;
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -32,61 +33,109 @@ class _MyHomePageState extends State<MyHomePage> {
                 Positioned(
                   right: MediaQuery.of(context).size.width > 600 ? 250 : 20,
                   top: 150,
-                  child: Text(
-                    "Hello, I'm ${userList[0].nama}\nFlutter Developer",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(20),
-            color: Colors.white,
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.5,
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width > 600 ? 400 : 285,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
-                          "About Me",
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
+                        Flexible(
+                          child: Text(
+                            userList[0].nama,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                        Row(
-                          children: [
-                            Container(
-                              width: 3,
-                              height: 40,
-                              color: Colors.blue.shade300, 
-                              margin: const EdgeInsets.only(
-                                right: 8,
-                              ),
+                        SizedBox(
+                          height: 50,
+                          child: DefaultTextStyle(
+                            style: const TextStyle(
+                              fontSize: 40.0,
+                              fontFamily: 'Horizon',
+                              color: Colors.white,
                             ),
-                            Text(
-                              userList[0].nama,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
+                            child: AnimatedTextKit(
+                              animatedTexts: [
+                                RotateAnimatedText('Flutter'),
+                                RotateAnimatedText('Developer'),
+                              ],
+                              onTap: () {
+                                print("Tap Event");
+                              },
+                              repeatForever: true,
                             ),
-                          ],
+                          ),
+                        ),
+                        DefaultTextStyle(
+                          style: TextStyle(fontSize: 18, color: Colors.grey),
+                          child: AnimatedTextKit(
+                            animatedTexts: [
+                              TypewriterAnimatedText(
+                                "A ${userList[0].pekerjaan} who currently focused on Mobile development. Other than that i also intrested in UI/UX design and back end development. i love to learn new things and always open to new opportunities",
+                                speed: Duration(milliseconds: 50),
+                              ),
+                            ],
+                            onTap: () {
+                              print("Tap Event");
+                            },
+                            repeatForever: false,
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        SizedBox(
+                          child: Row(
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {},
+                                child: Text("View Projects"),
+                              ),
+                              OutlinedButton(
+                                onPressed: () {},
+                                child: Text("Download CV"),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        SizedBox(
+                          width: 285,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              IconButton(
+                                onPressed: () {},
+                                icon: Image.asset(
+                                  'assets/images/github.png',
+                                  width: 26,
+                                  height: 26,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {},
+                                icon: Image.asset(
+                                  'assets/images/linkedin.png',
+                                  width: 26,
+                                  height: 26,
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {},
+                                icon: Image.asset(
+                                  'assets/images/instagram.png',
+                                  width: 26,
+                                  height: 26,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
-                    Image.asset(userList[0].foto!, width: 200, height: 200),
-                  ],
+                  ),
                 ),
               ],
             ),
