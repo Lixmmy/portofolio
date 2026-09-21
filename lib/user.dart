@@ -9,7 +9,7 @@ class User {
   final List<String>? bahasa;
   final String? foto;
   final List<String>? bahasaPemrograman;
-  
+
   const User({
     required this.nama,
     this.alamat,
@@ -23,17 +23,16 @@ class User {
   });
 }
 
-List<User> userList = [
-  User(
-    nama: 'Felix',
-    tempatLahir: 'Medan',
-    tanggalLahir: '21 Agustus 2003',
-    status: 'Mahasiswa',
-    pekerjaan: 'Junior Software Developer',
-    alamat:
-        'Jl. A.M.D, Komplek Dewiindah Blok D5, Rengas Pulau, Medan Marelan, Sumatera Utara',
-    foto: 'images/felix.jpg',
-    bahasa: ['Indonesia - Mahir', 'Inggris - Sedang'],
-    bahasaPemrograman: ['Dart', 'JavaScript', 'SQL',  ]
-  ),
-];
+User felix = User(
+  nama: 'Felix',
+  tempatLahir: 'Medan',
+  tanggalLahir: '21 Agustus 2003',
+  status: 'Mahasiswa',
+  pekerjaan: 'Junior Software Developer',
+  alamat:
+      'Jl. A.M.D, Komplek Dewiindah Blok D5, Rengas Pulau, Medan Marelan, Sumatera Utara',
+  foto: 'images/felix.jpg',
+  bahasa: ['Indonesia - Mahir', 'Inggris - Sedang'],
+  bahasaPemrograman: ['Dart', 'JavaScript', 'SQL'],
+);
+

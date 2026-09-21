@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:portofolio/model.dart';
+import 'package:portofolio/user.dart';
 import 'package:rive/rive.dart' hide Image;
 import 'package:animated_text_kit/animated_text_kit.dart';
 
@@ -40,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         Flexible(
                           child: Text(
-                            userList[0].nama,
+                            felix.nama,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 32,
@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: AnimatedTextKit(
                             animatedTexts: [
                               TypewriterAnimatedText(
-                                "A ${userList[0].pekerjaan} who currently focused on Mobile development. Other than that i also intrested in UI/UX design and back end development. i love to learn new things and always open to new opportunities",
+                                "A ${felix.pekerjaan} who currently focused on Mobile development. Other than that i also intrested in UI/UX design and back end development. i love to learn new things and always open to new opportunities",
                                 speed: Duration(milliseconds: 50),
                               ),
                             ],
