@@ -15,7 +15,6 @@ class AppTheme {
   static const Color errorColor = Color(0xFFB00020);
   static const Color textLightColor = Colors.black87;
   static const Color textDarkColor = Colors.white;
-
   // Tema terang (Light Theme)
   static final ThemeData lightTheme = ThemeData(
     useMaterial3: true,
@@ -101,6 +100,12 @@ class AppTheme {
     //     color: textLightColor,
     //   ),
     // ),
+    cardTheme: CardThemeData(
+      color: surfaceDarkColorA40,
+      shadowColor: Colors.white,
+      elevation: 6,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+    ),
     iconButtonTheme: IconButtonThemeData(
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty<Color>.fromMap({
