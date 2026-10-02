@@ -36,7 +36,7 @@ User felix = User(
   status: dotenv.get('STATUS'),
   pekerjaan: dotenv.get('PEKERJAAN'),
   alamat: dotenv.get('ALAMAT'),
-  foto: 'images/felix.jpg',
+  foto: 'assets/images/felix.jpg',
   bahasa: ['Indonesia - Mahir', 'Inggris - Sedang'],
   bahasaPemrograman: ['Dart', 'JavaScript', 'SQL', 'Python'],
   backend: ['Node.js', 'Express.js', 'Hapi.js', 'FastAPI'],
