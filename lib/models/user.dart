@@ -11,6 +11,7 @@ class User {
   final List<String>? bahasa;
   final String? foto;
   final List<String>? bahasaPemrograman;
+  final List<String>? backend;
   final List<String>? frameworks;
 
   const User({
@@ -23,6 +24,7 @@ class User {
     this.bahasa,
     this.foto,
     this.bahasaPemrograman,
+    this.backend,
     this.frameworks,
   });
 }
@@ -37,5 +39,6 @@ User felix = User(
   foto: 'images/felix.jpg',
   bahasa: ['Indonesia - Mahir', 'Inggris - Sedang'],
   bahasaPemrograman: ['Dart', 'JavaScript', 'SQL', 'Python'],
-  frameworks: ['Flutter', 'Node.js', 'N8N'],
+  backend: ['Node.js', 'Express.js', 'Hapi.js', 'FastAPI'],
+  frameworks: ['Flutter', 'N8N', 'GitHub', 'GitLab', 'Docker', 'Postman'],
 );

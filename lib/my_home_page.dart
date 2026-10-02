@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:portofolio/user.dart';
+import 'package:portofolio/models/user.dart';
 import 'package:rive/rive.dart' hide Image;
 import 'package:animated_text_kit/animated_text_kit.dart';
 
@@ -11,14 +11,57 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final GlobalKey _aboutKey = GlobalKey();
+  // final GlobalKey _projectsKey = GlobalKey();
+  // final GlobalKey _contactKey = GlobalKey();
+  final GlobalKey _homeKey = GlobalKey();
+
+  void _scrollToSection(GlobalKey key) {
+    final context = key.currentContext;
+    if (context != null) {
+      Scrollable.ensureVisible(
+        context,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
+      appBar: AppBar(
+        title: Text("< Felix.Dev />", style: TextStyle(color: Colors.amber)),
+        backgroundColor: Colors.transparent,
+        actions: [
+          TextButton(
+            onPressed: () {
+              _scrollToSection(_homeKey);
+            },
+            child: Text("Home", style: TextStyle(color: Colors.amber)),
+          ),
+          TextButton(
+            onPressed: () {
+              _scrollToSection(_aboutKey);
+            },
+            child: Text("About", style: TextStyle(color: Colors.amber)),
+          ),
+          TextButton(
+            onPressed: () {},
+            child: Text("Projects", style: TextStyle(color: Colors.amber)),
+          ),
+          TextButton(
+            onPressed: () {},
+            child: Text("Contact", style: TextStyle(color: Colors.amber)),
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
+              key: _homeKey,
               color: Colors.black,
               height: MediaQuery.of(context).size.height * 0.7,
               child: Stack(
@@ -139,16 +182,19 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Container(
+              key: _aboutKey,
               width: double.infinity,
               padding: const EdgeInsets.all(24),
               child: LayoutBuilder(
                 builder: (context, constraints) {
-                  final isWide = MediaQuery.sizeOf(context).width > 600;
+                  final isWide = constraints.maxWidth >= 900;
+                  final isDetailsWide = constraints.maxWidth >= 1200;
                   final aboutText = Card(
                     child: Padding(
                       padding: const EdgeInsets.all(18.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           const Text(
                             "About Me",
@@ -170,9 +216,14 @@ I believe great software is built on solid architecture, clean code, and attenti
                     ),
                   );
                   final education = Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: isDetailsWide
+                        ? CrossAxisAlignment.start
+                        : CrossAxisAlignment.center,
                     children: [
                       Row(
+                        mainAxisAlignment: isDetailsWide
+                            ? MainAxisAlignment.start
+                            : MainAxisAlignment.center,
                         children: [
                           Icon(Icons.school, color: Colors.white),
                           SizedBox(width: 8),
@@ -188,31 +239,123 @@ I believe great software is built on solid architecture, clean code, and attenti
                       ),
                       Container(color: Colors.amber, height: 4, width: 150),
                       const SizedBox(height: 20),
-                      const Text(
-                        "STMIK Time\nBachelor of Computer Science\n2022 - 2026\nGPA: 3.99/4.00",
-                        style: TextStyle(fontSize: 18, color: Colors.white),
-                        textAlign: TextAlign.left,
+
+                      IntrinsicHeight(
+                        child: Row(
+                          mainAxisAlignment: isDetailsWide
+                              ? MainAxisAlignment.start
+                              : MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              children: [
+                                Container(
+                                  width: 20,
+                                  height: 20,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.white,
+                                    border: Border.all(
+                                      color: Colors.amber,
+                                      width: 2,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    width: 2,
+                                    color: Colors.white,
+                                  ),
+                                ), // Add some spacing between the circle and the text
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: const Text(
+                                "STMIK Time\nBachelor of Computer Science\n2022 - 2026\nGPA: 3.99/4.00",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   );
                   final photo = ClipOval(
                     child: Image.asset(felix.foto!, width: 250, height: 250),
                   );
+                  final skills = Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.code, color: Colors.white),
+                          SizedBox(width: 8),
+                          const Text(
+                            "Tech Stack",
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Center(
+                        child: Container(
+                          color: Colors.amber,
+                          height: 4,
+                          width: 150,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      TechWrap(
+                        skills: felix.bahasaPemrograman!,
+                        text: 'Frontend: ',
+                      ),
+                      const SizedBox(height: 20),
+                      TechWrap(skills: felix.backend!, text: 'Backend: '),
+                      const SizedBox(height: 20),
+                      TechWrap(
+                        skills: felix.frameworks!,
+                        text: 'Framework / Tools: ',
+                      ),
+                    ],
+                  );
 
                   return Center(
                     child: ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 1200),
+                      constraints: const BoxConstraints(maxWidth: 1400),
                       child: isWide
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.max,
                               children: [
                                 Expanded(
                                   child: Column(
                                     children: [
                                       aboutText,
                                       const SizedBox(height: 24),
-                                      education,
+                                      if (isDetailsWide)
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Expanded(child: education),
+                                            const SizedBox(width: 24),
+                                            Expanded(child: skills),
+                                          ],
+                                        )
+                                      else ...[
+                                        education,
+                                        const SizedBox(height: 24),
+                                        skills,
+                                      ],
                                     ],
                                   ),
                                 ),
@@ -228,110 +371,9 @@ I believe great software is built on solid architecture, clean code, and attenti
                                 aboutText,
                                 const SizedBox(height: 24),
                                 education,
+                                skills,
                               ],
                             ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(24),
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  // final isWide = MediaQuery.sizeOf(context).width > 600;
-                  final skills = Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.code, color: Colors.white),
-                          SizedBox(width: 8),
-                          const Text(
-                            "Tech Stack",
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Container(color: Colors.amber, height: 4, width: 150),
-                      const SizedBox(height: 20),
-                      Wrap(
-                        spacing: 8.0,
-                        runSpacing: 4.0,
-                        children: [
-                          Text(
-                            "Frontend: ",
-                            style: TextStyle(color: Colors.amber),
-                          ),
-                          for (var skill in felix.bahasaPemrograman!)
-                            Column(
-                              children: [
-                                Container(
-                                  color: Colors
-                                      .white, // Background color for the image
-                                  child: Image.asset(
-                                    'assets/images/${skill.toLowerCase()}_logo.png',
-                                    width: 32,
-                                    height: 32,
-                                  ),
-                                ),
-                                SizedBox(height: 4),
-                                Chip(
-                                  label: Text(skill),
-                                  backgroundColor: Colors.grey[800],
-                                  labelStyle: TextStyle(
-                                    color: Colors.amberAccent[200],
-                                  ),
-                                ),
-                              ],
-                            ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      Wrap(
-                        spacing: 8.0,
-                        runSpacing: 4.0,
-                        children: [
-                          Text(
-                            "Frameworks / Tools: ",
-                            style: TextStyle(color: Colors.amber),
-                          ),
-                          for (var skill in felix.frameworks!)
-                            Column(
-                              children: [
-                                Container(
-                                  color: Colors
-                                      .white, // Background color for the image
-                                  child: Image.asset(
-                                    'assets/images/${skill.toLowerCase()}_logo.png',
-                                    width: 32,
-                                    height: 32,
-                                  ),
-                                ),
-                                SizedBox(height: 4),
-                                Chip(
-                                  label: Text(skill),
-                                  backgroundColor: Colors.grey[800],
-                                  labelStyle: TextStyle(
-                                    color: Colors.amberAccent[200],
-                                  ),
-                                ),
-                              ],
-                            ),
-                        ],
-                      ),
-                    ],
-                  );
-
-                  return Center(
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 1200),
-                      child: skills,
                     ),
                   );
                 },
@@ -340,6 +382,45 @@ I believe great software is built on solid architecture, clean code, and attenti
           ],
         ),
       ),
+    );
+  }
+}
+
+class TechWrap extends StatelessWidget {
+  final String text;
+  final List<String> skills;
+  const TechWrap({super.key, required this.text, required this.skills});
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      spacing: 8.0,
+      runSpacing: 4.0,
+      crossAxisAlignment: WrapCrossAlignment.start,
+      alignment: WrapAlignment.end,
+      children: [
+        Text(text, style: TextStyle(color: Colors.amber)),
+        for (var skill in skills)
+          Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12.0), // Optional padding
+                color: Colors.white, // Background color for the image
+                child: Image.asset(
+                  'assets/images/${skill.toLowerCase()}_logo.png',
+                  width: 32,
+                  height: 32,
+                ),
+              ),
+              SizedBox(height: 4),
+              Chip(
+                label: Text(skill),
+                backgroundColor: Colors.grey[800],
+                labelStyle: TextStyle(color: Colors.amberAccent[200]),
+              ),
+            ],
+          ),
+      ],
     );
   }
 }
