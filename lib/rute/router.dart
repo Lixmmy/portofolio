@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'package:portofolio/my_home_page.dart';
+import 'package:portofolio/page/my_home_page.dart';
 
 GoRouter myRouter() {
   return GoRouter(
