@@ -3,7 +3,6 @@ import 'package:portofolio/models/project.dart';
 import 'package:portofolio/models/user.dart';
 import 'package:portofolio/widgets/about_me.dart';
 import 'package:portofolio/widgets/project_card.dart';
-import 'package:portofolio/widgets/tech_stack.dart';
 import 'package:rive/rive.dart' hide Image;
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -208,9 +207,10 @@ class _MyHomePageState extends State<MyHomePage> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    _launchUrl(felix.githubLink);
+                                  },
                                   child: Text("View Projects"),
-                                  onHover: (value) {},
                                 ),
                                 OutlinedButton(
                                   onPressed: () {},
@@ -275,10 +275,13 @@ class _MyHomePageState extends State<MyHomePage> {
                           physics: NeverScrollableScrollPhysics(),
                           itemCount: projects.length,
                           itemBuilder: (context, index) {
-                            return ProjectCard(
-                              project: projects[index],
-                              onGitHubPressed: (githubLink) =>
-                                  _launchUrl(githubLink),
+                            return Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: ProjectCard(
+                                project: projects[index],
+                                onGitHubPressed: (githubLink) =>
+                                    _launchUrl(githubLink),
+                              ),
                             );
                           },
                         )
@@ -288,7 +291,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: isDetailsWide ? 3 : 2,
-                                childAspectRatio: 0.75,
+                                childAspectRatio: isDetailsWide ? 0.6 : 0.68,
                                 crossAxisSpacing: 16,
                                 mainAxisSpacing: 16,
                               ),

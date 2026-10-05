@@ -13,6 +13,7 @@ class User {
   final List<String>? bahasaPemrograman;
   final List<String>? backend;
   final List<String>? frameworks;
+  final String? githubLink;
 
   const User({
     required this.nama,
@@ -26,6 +27,7 @@ class User {
     this.bahasaPemrograman,
     this.backend,
     this.frameworks,
+    this.githubLink,
   });
 }
 
@@ -41,4 +43,5 @@ User felix = User(
   bahasaPemrograman: ['Dart', 'JavaScript', 'SQL', 'Python'],
   backend: ['Node.js', 'Express.js', 'Hapi.js', 'FastAPI'],
   frameworks: ['Flutter', 'N8N', 'GitHub', 'GitLab', 'Docker', 'Postman'],
+  githubLink: 'https://github.com/Lixmmy',
 );
