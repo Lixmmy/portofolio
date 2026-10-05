@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:portofolio/models/project.dart';
 import 'package:portofolio/models/user.dart';
 import 'package:portofolio/widgets/about_me.dart';
-import 'package:portofolio/widgets/project_card.dart';
+import 'package:portofolio/widgets/feature_project.dart';
 import 'package:rive/rive.dart' hide Image;
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -17,7 +16,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey _aboutKey = GlobalKey();
   final GlobalKey _projectsKey = GlobalKey();
-  // final GlobalKey _contactKey = GlobalKey();
+  final GlobalKey _contactKey = GlobalKey();
   final GlobalKey _homeKey = GlobalKey();
 
   void _scrollToSection(GlobalKey key) {
@@ -60,14 +59,18 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Text("About", style: TextStyle(color: Colors.amber)),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _scrollToSection(_projectsKey);
+                  },
                   child: Text(
                     "Projects",
                     style: TextStyle(color: Colors.amber),
                   ),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _scrollToSection(_contactKey);
+                  },
                   child: Text("Contact", style: TextStyle(color: Colors.amber)),
                 ),
               ]
@@ -208,14 +211,13 @@ class _MyHomePageState extends State<MyHomePage> {
                               children: [
                                 ElevatedButton(
                                   onPressed: () {
-                                    _launchUrl(felix.githubLink);
+                                    _scrollToSection(_projectsKey);
                                   },
                                   child: Text("View Projects"),
                                 ),
                                 OutlinedButton(
                                   onPressed: () {},
                                   child: Text("Download CV"),
-                                  onHover: (value) {},
                                 ),
                               ],
                             ),
@@ -227,17 +229,23 @@ class _MyHomePageState extends State<MyHomePage> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    _launchUrl(felix.githubLink);
+                                  },
                                   icon: Image.asset('assets/images/github.png'),
                                 ),
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    _launchUrl(felix.linkedinLink);
+                                  },
                                   icon: Image.asset(
                                     'assets/images/linkedin.png',
                                   ),
                                 ),
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    _launchUrl(felix.instagramLink);
+                                  },
                                   icon: Image.asset(
                                     'assets/images/instagram.png',
                                   ),
@@ -253,73 +261,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             AboutMe(aboutKey: _aboutKey),
-            Container(
-              key: _projectsKey,
-              padding: const EdgeInsets.symmetric(vertical: 40),
-              width: double.infinity,
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  final isWide = constraints.maxWidth >= 900;
-                  final isDetailsWide = constraints.maxWidth >= 1200;
-                  final projectsText = Text(
-                    "Featured Projects",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.amber,
-                    ),
-                  );
-                  final projectList = !isWide
-                      ? ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: projects.length,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: ProjectCard(
-                                project: projects[index],
-                                onGitHubPressed: (githubLink) =>
-                                    _launchUrl(githubLink),
-                              ),
-                            );
-                          },
-                        )
-                      : GridView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: isDetailsWide ? 3 : 2,
-                                childAspectRatio: isDetailsWide ? 0.6 : 0.68,
-                                crossAxisSpacing: 16,
-                                mainAxisSpacing: 16,
-                              ),
-                          itemCount: projects.length,
-                          itemBuilder: (context, index) {
-                            return ProjectCard(
-                              project: projects[index],
-                              onGitHubPressed: (githubLink) =>
-                                  _launchUrl(githubLink),
-                            );
-                          },
-                        );
-                  return ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 1400),
-                    child: Column(
-                      crossAxisAlignment: constraints.maxWidth > 600
-                          ? CrossAxisAlignment.start
-                          : CrossAxisAlignment.center,
-                      children: [
-                        projectsText,
-                        SizedBox(height: 20),
-                        projectList,
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
+            FeatureProject(projectsKey: _projectsKey),
           ],
         ),
       ),

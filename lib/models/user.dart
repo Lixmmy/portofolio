@@ -14,6 +14,8 @@ class User {
   final List<String>? backend;
   final List<String>? frameworks;
   final String? githubLink;
+  final String? linkedinLink;
+  final String? instagramLink;
 
   const User({
     required this.nama,
@@ -28,6 +30,8 @@ class User {
     this.backend,
     this.frameworks,
     this.githubLink,
+    this.instagramLink,
+    this.linkedinLink,
   });
 }
 
@@ -44,4 +48,6 @@ User felix = User(
   backend: ['Node.js', 'Express.js', 'Hapi.js', 'FastAPI'],
   frameworks: ['Flutter', 'N8N', 'GitHub', 'GitLab', 'Docker', 'Postman'],
   githubLink: 'https://github.com/Lixmmy',
+  linkedinLink: 'https://www.linkedin.com/in/lix-goh/',
+  instagramLink: 'https://www.instagram.com/felix.go_/',
 );
