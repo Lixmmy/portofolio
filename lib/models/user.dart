@@ -13,9 +13,7 @@ class User {
   final List<String>? bahasaPemrograman;
   final List<String>? backend;
   final List<String>? frameworks;
-  final String? githubLink;
-  final String? linkedinLink;
-  final String? instagramLink;
+  final List<Map<String, String>>? sosmedAccount;
 
   const User({
     required this.nama,
@@ -29,9 +27,7 @@ class User {
     this.bahasaPemrograman,
     this.backend,
     this.frameworks,
-    this.githubLink,
-    this.instagramLink,
-    this.linkedinLink,
+    this.sosmedAccount,
   });
 }
 
@@ -47,7 +43,32 @@ User felix = User(
   bahasaPemrograman: ['Dart', 'JavaScript', 'SQL', 'Python'],
   backend: ['Node.js', 'Express.js', 'Hapi.js', 'FastAPI'],
   frameworks: ['Flutter', 'N8N', 'GitHub', 'GitLab', 'Docker', 'Postman'],
-  githubLink: 'https://github.com/Lixmmy',
-  linkedinLink: 'https://www.linkedin.com/in/lix-goh/',
-  instagramLink: 'https://www.instagram.com/felix.go_/',
+
+  sosmedAccount: [
+    {
+      "Link": 'https://github.com/Lixmmy',
+      "imageAsset": 'assets/images/github.png',
+      "name": "Github",
+    },
+    {
+      "Link": 'https://www.linkedin.com/in/lix-goh/',
+      "imageAsset": 'assets/images/linkedin.png',
+      "name": "Linkedin",
+    },
+    {
+      "Link": 'https://www.instagram.com/felix.go_/',
+      "imageAsset": 'assets/images/instagram.png',
+      "name": "Instagram",
+    },
+    {
+      "Link": "089679368132",
+      "imageAsset": 'assets/images/whatsapp.png',
+      "name": "Whatsapp",
+    },
+    {
+      "Link": "felixsf123@gmail.com",
+      "imageAsset": 'assets/images/email.png',
+      "name": "Email",
+    },
+  ],
 );

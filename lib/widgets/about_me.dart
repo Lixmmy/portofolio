@@ -66,7 +66,14 @@ I believe great software is built on solid architecture, clean code, and attenti
                   ),
                 ],
               ),
-              Container(color: Colors.amber, height: 4, width: 150),
+              Container(
+                height: 4,
+                width: 150,
+                decoration: BoxDecoration(
+                  color: Colors.amber,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
               const SizedBox(height: 20),
 
               IntrinsicHeight(
@@ -126,7 +133,14 @@ I believe great software is built on solid architecture, clean code, and attenti
                 ],
               ),
               Center(
-                child: Container(color: Colors.amber, height: 4, width: 150),
+                child: Container(
+                  height: 4,
+                  width: 150,
+                  decoration: BoxDecoration(
+                    color: Colors.amber,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
               ),
               const SizedBox(height: 20),
               TechWrap(skills: felix.bahasaPemrograman!, text: 'Frontend: '),

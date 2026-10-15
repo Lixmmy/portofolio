@@ -61,22 +61,25 @@ class FeatureProject extends StatelessWidget {
                   physics: NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: isDetailsWide ? 3 : 2,
-                    childAspectRatio: isDetailsWide ? 0.6 : 0.68,
+                    childAspectRatio: isDetailsWide ? 0.75 : 0.7,
                     crossAxisSpacing: 16,
                     mainAxisSpacing: 16,
                   ),
                   itemCount: projects.length,
                   itemBuilder: (context, index) {
-                    return ProjectCard(
-                      project: projects[index],
-                      onGitHubPressed: (githubLink) => _launchUrl(githubLink),
+                    return Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: ProjectCard(
+                        project: projects[index],
+                        onGitHubPressed: (githubLink) => _launchUrl(githubLink),
+                      ),
                     );
                   },
                 );
           return ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 1400),
             child: Column(
-              crossAxisAlignment: constraints.maxWidth > 600
+              crossAxisAlignment: isWide
                   ? CrossAxisAlignment.start
                   : CrossAxisAlignment.center,
               children: [projectsText, SizedBox(height: 20), projectList],

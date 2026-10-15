@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:portofolio/models/user.dart';
 import 'package:portofolio/widgets/about_me.dart';
+import 'package:portofolio/widgets/contact_card.dart';
 import 'package:portofolio/widgets/feature_project.dart';
 import 'package:rive/rive.dart' hide Image;
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -32,7 +33,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _launchUrl(String? link) async {
     if (link == null || link.isEmpty) return;
-    final Uri url = Uri.parse(link);
+    final Uri url;
+    if (link.contains('@') && !link.startsWith('http')) {
+      // Email -> buka aplikasi email
+      url = Uri(scheme: 'mailto', path: link);
+    } else if (RegExp(r'^\+?[\d\s-]+$').hasMatch(link)) {
+      // Nomor telepon -> WhatsApp (0xxx diubah ke format internasional 62xxx)
+      var number = link.replaceAll(RegExp(r'[^\d]'), '');
+      if (number.startsWith('0')) number = '62${number.substring(1)}';
+      url = Uri.parse('https://wa.me/$number');
+    } else {
+      url = Uri.parse(link);
+    }
     if (!await launchUrl(
       url,
       mode: LaunchMode.externalApplication,
@@ -148,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   Positioned(
-                    right: MediaQuery.of(context).size.width > 600 ? 140 : 60,
+                    right: MediaQuery.of(context).size.width > 600 ? 140 : 40,
                     top: 150,
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width > 600
@@ -182,7 +194,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   RotateAnimatedText('Developer'),
                                 ],
                                 onTap: () {
-                                  print("Tap Event");
+                                  // print("Tap Event");
                                 },
                                 repeatForever: true,
                               ),
@@ -198,7 +210,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                               ],
                               onTap: () {
-                                print("Tap Event");
+                                // print("Tap Event");
                               },
                               repeatForever: false,
                               isRepeatingAnimation: false,
@@ -230,24 +242,26 @@ class _MyHomePageState extends State<MyHomePage> {
                               children: [
                                 IconButton(
                                   onPressed: () {
-                                    _launchUrl(felix.githubLink);
-                                  },
-                                  icon: Image.asset('assets/images/github.png'),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    _launchUrl(felix.linkedinLink);
+                                    _launchUrl(felix.sosmedAccount![0]['Link']);
                                   },
                                   icon: Image.asset(
-                                    'assets/images/linkedin.png',
+                                    felix.sosmedAccount![0]['imageAsset']!,
                                   ),
                                 ),
                                 IconButton(
                                   onPressed: () {
-                                    _launchUrl(felix.instagramLink);
+                                    _launchUrl(felix.sosmedAccount![1]['Link']);
                                   },
                                   icon: Image.asset(
-                                    'assets/images/instagram.png',
+                                    felix.sosmedAccount![1]['imageAsset']!,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    _launchUrl(felix.sosmedAccount![2]['Link']);
+                                  },
+                                  icon: Image.asset(
+                                    felix.sosmedAccount![2]['imageAsset']!,
                                   ),
                                 ),
                               ],
@@ -262,6 +276,97 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             AboutMe(aboutKey: _aboutKey),
             FeatureProject(projectsKey: _projectsKey),
+            Container(
+              key: _contactKey,
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 40),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final isWide = constraints.maxWidth >= 900;
+                  final contactText = Column(
+                    crossAxisAlignment: isWide
+                        ? CrossAxisAlignment.start
+                        : CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Let's Talk",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.amber,
+                        ),
+                      ),
+                      Container(
+                        height: 2,
+                        width: 150,
+                        decoration: BoxDecoration(
+                          color: Colors.amber,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        "I'm open to Junior Flutter roles and exciting projects. Feel free to reach out!",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: const Color.fromARGB(255, 94, 93, 93),
+                        ),
+                      ),
+                    ],
+                  );
+                  final cardContact = !isWide
+                      ? ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            final Map<String, String> item =
+                                felix.sosmedAccount![index];
+                            return ContactCard(
+                              item: item,
+                              onClick: () {
+                                _launchUrl(item['Link']);
+                              },
+                            );
+                          },
+                          itemCount: felix.sosmedAccount!.length,
+                        )
+                      : GridView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: constraints.maxWidth / 200,
+                              ),
+                          itemCount: felix.sosmedAccount!.length,
+                          itemBuilder: (context, index) {
+                            final Map<String, String> item =
+                                felix.sosmedAccount![index];
+                            return ContactCard(
+                              item: item,
+                              onClick: () {
+                                _launchUrl(item['Link']);
+                              },
+                            );
+                          },
+                        );
+
+                  return ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 1400),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: isWide
+                            ? CrossAxisAlignment.start
+                            : CrossAxisAlignment.center,
+                        children: [contactText, cardContact],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
