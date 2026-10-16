@@ -41,9 +41,10 @@ class _MyHomePageState extends State<MyHomePage> {
         url = Uri(
           scheme: 'https',
           host: 'mail.google.com',
-          path: '/mail/u/0/?tab=rm&ogbl=#inbox?',
+          path: '/mail/u/0/',
+          fragment: '#inbox?',
           queryParameters: {
-            'compose': link, // Ganti dengan email tujuan
+            'compose': Uri.encodeComponent(link), // Ganti dengan email tujuan
           },
         );
       } else {
@@ -71,6 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
     )) {
       debugPrint('Tidak dapat memuat $url');
     }
+    debugPrint(url as String?);
   }
 
   @override
