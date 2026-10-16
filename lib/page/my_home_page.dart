@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
           scheme: 'https',
           host: 'mail.google.com',
           path: '/mail/u/0/',
-          fragment: '#inbox?compose:${Uri.encodeComponent(link)}',
+          fragment: 'inbox?compose=$link',
         );
       } else {
         url = Uri(
