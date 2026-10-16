@@ -33,25 +33,32 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> _launchUrl(String? link) async {
+    final subject = 'Halo Admin!';
+    final body = "Saya ingin bertanya...";
     if (link == null || link.isEmpty) return;
     final Uri url;
     if (link.contains('@') && !link.startsWith('http')) {
       // Email -> buka aplikasi email
       if (kIsWasm || kIsWeb) {
-        url = Uri(
-          scheme: 'https',
-          host: 'mail.google.com',
-          path: '/mail/u/0/',
-          fragment: 'inbox?compose=$link',
-        );
+        final userAgent = defaultTargetPlatform;
+        if (userAgent == TargetPlatform.windows ||
+            userAgent == TargetPlatform.macOS ||
+            userAgent == TargetPlatform.linux) {
+          url = Uri.parse(
+            'https://mail.google.com/mail/?view=cm&fs=1&to=$link&su=$subject&body=$body',
+          );
+        } else {
+          url = Uri(
+            scheme: 'mailto',
+            path: link,
+            queryParameters: <String, String>{'subject': subject, 'body': body},
+          );
+        }
       } else {
         url = Uri(
           scheme: 'mailto',
           path: link,
-          queryParameters: <String, String>{
-            'subject': 'Halo Admin!',
-            'body': 'Saya ingin bertanya...',
-          },
+          queryParameters: <String, String>{'subject': subject, 'body': body},
         );
       }
     } else if (RegExp(r'^\+?[\d\s-]+$').hasMatch(link)) {
@@ -69,7 +76,6 @@ class _MyHomePageState extends State<MyHomePage> {
     )) {
       debugPrint('Tidak dapat memuat $url');
     }
-    debugPrint(url as String?);
   }
 
   @override
