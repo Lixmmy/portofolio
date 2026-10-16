@@ -40,14 +40,10 @@ class _MyHomePageState extends State<MyHomePage> {
       if (kIsWasm || kIsWeb) {
         url = Uri(
           scheme: 'https',
-          host: 'google.com',
-          path: '/mail/',
+          host: 'mail.google.com',
+          path: '/mail/u/0/?tab=rm&ogbl=#inbox?',
           queryParameters: {
-            'view': 'cm',
-            'fs': '1',
-            'to': 'tujuan@email.com', // Ganti dengan email tujuan
-            'su': 'Halo Admin!', // Judul / Subjek email
-            'body': 'Saya ingin bertanya...', // Isi email
+            'compose': link, // Ganti dengan email tujuan
           },
         );
       } else {
